@@ -1,0 +1,27 @@
+{
+	"name": "linkorb/screenshot",
+    "description": "Screenshot generator",
+    "homepage": "https://github.com/linkorb/screenshot",
+    "keywords": ["screenshot", "documentation"],
+    "type": "library",
+    "authors": [
+        {
+            "name": "Joost Faassen",
+            "email": "j.faassen@linkorb.com",
+            "role": "Development"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+        "symfony/console": "~2.4",
+        "behat/mink": "1.7.*@dev",
+        "behat/mink-selenium2-driver": "1.3.*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Screenshot\\": "src/"
+        }
+    },
+    "license": "MIT"
+}

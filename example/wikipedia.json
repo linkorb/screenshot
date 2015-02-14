@@ -1,0 +1,37 @@
+{
+    "name": "Google example script",
+    "steps": [
+        {
+            "type": "Open",
+            "parameters": { "url": "http://www.wikipedia.org/" }
+        },
+        {
+            "type": "SetValue",
+            "parameters": { "id": "searchInput", "value": "Hello world"}
+        },
+        {
+            "type": "Select",
+            "parameters": { "id": "searchLanguage", "value": "en"}
+        },
+        {
+            "type": "Screenshot",
+            "parameters": { "name": "wikipedia-pre-search" }
+        },
+        {
+            "type": "Sleep",
+            "parameters": { "ms": 1000 }
+        },
+        {
+            "type": "Click",
+            "parameters": { "name": "go" }
+        },
+        {
+            "type": "Screenshot",
+            "parameters": { "name": "wikipedia-hello-world" }
+        },
+        {
+            "type": "Sleep",
+            "parameters": { "ms": 5000 }
+        }
+    ]
+}
