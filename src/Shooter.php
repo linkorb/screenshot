@@ -18,14 +18,28 @@ class Shooter
         return $this->session;
     }
     
+    private $width = 1024;
+    
+    public function getWidth()
+    {
+        return $this->width;
+    }
+    
+    private $height = 768;
+    
+    public function getHeight()
+    {
+        return $this->height;
+    }
+    
     public function runScript(Script $script)
     {
         $this->addInfo("Starting browser");
         $this->session->start();
         
         $chromeheight = 144/2;
-        $this->addInfo("Resizing browser");
-        $this->session->resizeWindow(1024, 768 + $chromeheight, null);
+        $this->addInfo("Resizing browser " . $this->getWidth() . "x" . $this->getHeight());
+        $this->session->resizeWindow($this->getWidth(), $this->getHeight() + $chromeheight, null);
 
         foreach ($script->getSteps() as $step) {
             $step->execute($this);
