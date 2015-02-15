@@ -3,19 +3,27 @@
 namespace Screenshot;
 
 use Behat\Mink\Session;
+use ObjectStorage\Service as ObjectStorageService;
 
 class Shooter
 {
     private $session;
+    private $storageservice;
     
-    public function __construct(Session $session)
+    public function __construct(Session $session, ObjectStorageService $storageservice)
     {
         $this->session = $session;
+        $this->storageservice = $storageservice;
     }
     
     public function getSession()
     {
         return $this->session;
+    }
+    
+    public function getStorageService()
+    {
+        return $this->storageservice;
     }
     
     private $width = 1024;

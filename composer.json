@@ -16,7 +16,9 @@
     "require-dev": {
         "symfony/console": "~2.4",
         "behat/mink": "1.7.*@dev",
-        "behat/mink-selenium2-driver": "1.3.*@dev"
+        "behat/mink-selenium2-driver": "1.3.*@dev",
+        "linkorb/objectstorage": "~2.0",
+        "aws/aws-sdk-php": "~2.7"
     },
     "autoload": {
         "psr-4": {

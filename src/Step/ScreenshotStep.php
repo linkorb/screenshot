@@ -105,10 +105,13 @@ class ScreenshotStep implements StepInterface
             imagecopyresampled($image_p, $image, 0, 0, 0, 0, $shooter->getWidth(), $shooter->getHeight(), $width, $height);
 
         }
-        
-        imagepng($image, $this->name .'.png', null);
+        $tmpfilename = '/tmp/tmp-' . $this->name .'.png';
+        imagepng($image, $tmpfilename, null);
         imagedestroy($image);
-        
-                
+
+        $storageservice = $shooter->getStorageService();
+        $storageservice->upload($this->name . '.png', $tmpfilename);
+        unlink($tmpfilename);
     }
+
 }
