@@ -39,6 +39,7 @@ class ScreenshotStep implements StepInterface
         $screenshotdata = $session->getDriver()->getScreenshot();
         
         $image = imagecreatefromstring($screenshotdata);
+        imageantialias($image, true);
         $size = getimagesizefromstring($screenshotdata);
         //$image = imagescale($image, $shooter->getWidth());
         
@@ -46,7 +47,7 @@ class ScreenshotStep implements StepInterface
         imagecopyresampled($image_p, $image, 0, 0, 0, 0, $shooter->getWidth(), $shooter->getHeight(), $size[0], $size[1]);
         
         $image = $image_p;
-
+        imageantialias($image, true);
         
         print_r($size);
         
@@ -58,7 +59,7 @@ class ScreenshotStep implements StepInterface
             var_dump($box);
             
             $color = imagecolorallocate($image, 255, 0, 0);
-            for ($i=0; $i<2; $i++) {
+            for ($i=0; $i<4; $i++) {
                 /*
                 imagerectangle(
                     $image,
@@ -71,7 +72,8 @@ class ScreenshotStep implements StepInterface
                 */
                 $x = $box['left'] + ($box['width'] / 2);
                 $y = $box['top'] + ($box['height'] / 2);
-                imageellipse($image, $x, $y, $box['width']+$i, $box['height']+$i, $color);
+                //imageellipse($image, $x, $y, $box['width']+$i, $box['height']+$i, $color);
+                $this->imageEllipseAA($image, $x, $y, $box['width']+$i, $box['height']+$i, $color);
             }
 
             
@@ -113,5 +115,21 @@ class ScreenshotStep implements StepInterface
         $storageservice->upload($this->name . '.png', $tmpfilename);
         unlink($tmpfilename);
     }
-
+    
+    private function imageEllipseAA( &$img, $x, $y, $w, $h,$color,$segments=180) 
+    {
+        $w=$w/2;
+        $h=$h/2;
+        $jump=2*M_PI/$segments;
+        $oldx=$x+sin(-$jump)*$w;
+        $oldy=$y+cos(-$jump)*$h;
+        for($i=0;$i<2*(M_PI);$i+=$jump)
+        {
+            $newx=$x+sin($i)*$w;
+            $newy=$y+cos($i)*$h;
+            ImageLine($img,$newx,$newy,$oldx,$oldy,$color);
+            $oldx=$newx;
+            $oldy=$newy;
+        }
+    }
 }
