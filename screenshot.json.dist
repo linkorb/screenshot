@@ -1,0 +1,14 @@
+{ 
+    "variables": {
+        "test_password": "it_is_a_secret",
+        "baseurl": "http://www.wikipedia.org"
+    },
+    
+    "storage": "file",
+    
+    "output-path": "output/",
+    
+    "aws-access-key": "",
+    "aws-secret": "",
+    "aws-bucket": "example-bucketname"
+}
