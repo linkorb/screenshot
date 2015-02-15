@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script name="wikipedia">
+    <Steps>
+        <Open url="http://www.wikpedia.org" />
+        <SetValue id="searchInput" value="Hello world" />
+        <Select id="searchLanguage" value="en" />
+        <Screenshot name="wikipedia-pre-search" />
+        <Sleep ms="2000" />
+        <Click id="go" />
+        <Screenshot name="wikipedia-hello-world" />
+        <Sleep ms="1000" />
+    </Steps>
+</Script>

@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Screenshot\Shooter;
 use Screenshot\Loader\JsonScriptLoader;
+use Screenshot\Loader\XmlScriptLoader;
 
 use Behat\Mink\Mink;
 use Behat\Mink\Session;
@@ -37,9 +38,11 @@ class RunCommand extends Command
         $scriptfilename = $input->getArgument('script');
         $configfilename = $input->getArgument('config');
         $output->write("Loading $scriptfilename with config $configfilename\n");
+        
+        
         $configjson = file_get_contents($configfilename);
         $config = json_decode($configjson, true);
-        print_r($config);
+        //print_r($config);
         if (count($config)==0) {
             throw new RuntimeException("Could not parse configfile (invalid json?)");
         }
@@ -78,9 +81,20 @@ class RunCommand extends Command
         
         // Instantiate the Shooter
         $shooter = new Shooter($session, $storageservice);
-        $loader = new JsonScriptLoader();
-        $script = $loader->load($scriptfilename, $shooter);
-
+        switch (pathinfo($scriptfilename, PATHINFO_EXTENSION)) {
+            case "json":
+                $loader = new JsonScriptLoader();
+                $script = $loader->load($scriptfilename, $shooter);
+                break;
+            case "xml":
+                $loader = new XmlScriptLoader();
+                $script = $loader->load($scriptfilename, $shooter);
+                break;
+            default:
+                throw new InvalidArgumentException("Unsupported scriptfile extension");
+        }
+        //print_r($script);
+        
         $shooter->runScript($script);
     }
 }
